@@ -1,0 +1,33 @@
+DESC owner;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| first_name | varchar(255) | YES  |     | NULL    |                |
+| last_name  | varchar(255) | YES  |     | NULL    |                |
+| address    | varchar(255) | YES  |     | NULL    |                |
+| ownerID    | int          | NO   | PRI | NULL    | auto_increment |
++------------+--------------+------+-----+---------+----------------+
+DESC pet;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| name    | varchar(20) | YES  |     | NULL    |                |
+| species | varchar(20) | YES  |     | NULL    |                |
+| sex     | char(1)     | YES  |     | NULL    |                |
+| birth   | date        | YES  |     | NULL    |                |
+| death   | date        | YES  |     | NULL    |                |
+| petID   | int         | NO   | PRI | NULL    | auto_increment |
+| ownerID | int         | YES  | MUL | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+
+Tarvittavat SQL lauseet: 
+// Poistetaan ensin pet-taulusta owner. Lisätään sitten viiteavain, sekä luodaan rivi ownerID:lle. Luodaan myös rivi petID ja annetaan sille PRIMARY key 
+ALTER TABLE pet DROP COLUMN owner;
+ALTER TABLE pet ADD COLUMN petID INT PRIMARY KEY AUTO_INCREMENT;
+ALTER TABLE pet ADD COLUMN ownerID INT;
+ALTER TABLE pet ADD CONSTRAINT FOREIGN KEY(ownerID) REFERENCES owner(ownerID);
+// Lisätään ownerit owner tableen
+INSERT INTO owner VALUES ( 'Harold','Lloyd','Someaddress 1',NULL);
+// Annetaan lemmikeille omistajat ownerID:llä, käyttämällä OR voi lisätä useammalle samaan aikaan
+UPDATE pet SET ownerID=1 WHERE name='Fluffy';
+UPDATE pet SET ownerID=2 WHERE name='Chirpy' OR name='Whistler';

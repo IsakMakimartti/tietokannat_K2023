@@ -1,0 +1,107 @@
+A) SELECT DISTINCT * FROM employees ORDER BY last_name LIMIT 10;
++--------+------------+------------+-----------+--------+------------+
+| emp_no | birth_date | first_name | last_name | gender | hire_date  |
++--------+------------+------------+-----------+--------+------------+
+|  11761 | 1964-07-17 | Bartek     | Aamodt    | M      | 1991-06-12 |
+|  15427 | 1959-03-06 | Aluzio     | Aamodt    | M      | 1985-03-03 |
+|  18182 | 1963-02-23 | Dekang     | Aamodt    | F      | 1988-05-25 |
+|  16572 | 1956-11-26 | Matt       | Aamodt    | M      | 1987-06-16 |
+|  12791 | 1960-06-16 | Mokhtar    | Aamodt    | M      | 1994-08-14 |
+|  12516 | 1958-06-25 | Sreenivas  | Aamodt    | F      | 1990-03-06 |
+|  12982 | 1952-12-08 | Sachem     | Aamodt    | F      | 1992-01-11 |
+|  17400 | 1962-03-22 | Basim      | Aamodt    | F      | 1991-09-15 |
+|  19898 | 1957-03-09 | Vidar      | Aamodt    | M      | 1988-08-06 |
+|  17885 | 1954-02-01 | Takanari   | Aamodt    | M      | 1996-08-19 |
++--------+------------+------------+-----------+--------+------------+
+B)SELECT DISTINCT * FROM employees ORDER BY last_name, first_name LIMIT 10;
++--------+------------+------------+-----------+--------+------------+
+| emp_no | birth_date | first_name | last_name | gender | hire_date  |
++--------+------------+------------+-----------+--------+------------+
+| 258641 | 1961-05-23 | Abdelkader | Aamodt    | M      | 1994-12-02 |
+| 258005 | 1953-02-17 | Adhemar    | Aamodt    | F      | 1991-01-21 |
+| 455773 | 1960-05-04 | Aemilian   | Aamodt    | M      | 1988-04-21 |
+| 436560 | 1959-03-16 | Alagu      | Aamodt    | F      | 1991-10-17 |
+| 266651 | 1959-05-28 | Aleksander | Aamodt    | F      | 1989-03-29 |
+| 487598 | 1962-03-03 | Alexius    | Aamodt    | M      | 1994-12-30 |
+| 216963 | 1960-07-16 | Alois      | Aamodt    | M      | 1995-08-24 |
+|  15427 | 1959-03-06 | Aluzio     | Aamodt    | M      | 1985-03-03 |
+| 100860 | 1964-06-20 | Amabile    | Aamodt    | F      | 1993-02-06 |
+| 107070 | 1954-04-24 | Anestis    | Aamodt    | M      | 1990-10-30 |
++--------+------------+------------+-----------+--------+------------+
+C)SELECT * FROM employees ORDER BY hire_date LIMIT 5;
++--------+------------+------------+--------------+--------+------------+
+| emp_no | birth_date | first_name | last_name    | gender | hire_date  |
++--------+------------+------------+--------------+--------+------------+
+| 110022 | 1956-09-12 | Margareta  | Markovitch   | M      | 1985-01-01 |
+| 110511 | 1957-07-08 | DeForest   | Hagimont     | M      | 1985-01-01 |
+| 110303 | 1956-06-08 | Krassimir  | Wegerle      | F      | 1985-01-01 |
+| 110085 | 1959-10-28 | Ebru       | Alpin        | M      | 1985-01-01 |
+| 110183 | 1953-06-24 | Shirish    | Ossenbruggen | F      | 1985-01-01 |
++--------+------------+------------+--------------+--------+------------+
+D)SELECT * FROM employees JOIN salaries ON employees.emp_no = salaries.emp_no ORDER BY salary LIMIT 1;
++--------+------------+------------+-----------+--------+------------+--------+--------+------------+------------+
+| emp_no | birth_date | first_name | last_name | gender | hire_date  | emp_no | salary | from_date  | to_date    |
++--------+------------+------------+-----------+--------+------------+--------+--------+------------+------------+
+| 253406 | 1953-09-23 | Olivera    | Baek      | M      | 1994-07-04 | 253406 |  38623 | 2002-02-20 | 9999-01-01 |
++--------+------------+------------+-----------+--------+------------+--------+--------+------------+------------+
+E) SELECT * FROM employees JOIN salaries ON employees.emp_no = salaries.emp_no ORDER BY salary DESC LIMIT 1;
++--------+------------+------------+-----------+--------+------------+--------+--------+------------+------------+
+| emp_no | birth_date | first_name | last_name | gender | hire_date  | emp_no | salary | from_date  | to_date    |
++--------+------------+------------+-----------+--------+------------+--------+--------+------------+------------+
+|  43624 | 1953-11-14 | Tokuyasu   | Pesch     | M      | 1985-03-26 |  43624 | 158220 | 2002-03-22 | 9999-01-01 |
++--------+------------+------------+-----------+--------+------------+--------+--------+------------+------------+
+F)SELECT dept_name,COUNT(*) AS Lukumaara FROM departments JOIN dept_emp ON departments.dept_no=dept_emp.dept_no JOIN employees ON employees.emp_no=dept_emp.emp_no WHERE dept_name = 'Sales';
++-----------+-----------+
+| dept_name | Lukumaara |
++-----------+-----------+
+| Sales     |     52245 |
++-----------+-----------+
+G)SELECT dept_name,COUNT(*) AS Lukumaara FROM departments JOIN dept_emp ON departments.dept_no=dept_emp.dept_no JOIN employees ON employees.emp_no=dept_emp.emp_no WHERE dept_name = 'Marketing';
++-----------+-----------+
+| dept_name | Lukumaara |
++-----------+-----------+
+| Marketing |     20211 |
++-----------+-----------+
+H)SELECT first_name, last_name, dept_name FROM employees JOIN dept_manager ON employees.emp_no = dept_manager.emp_no JOIN departments ON dept_manager.dept_no = departments.dept_no ORDER BY dept_name;
++-------------+--------------+--------------------+
+| first_name  | last_name    | dept_name          |
++-------------+--------------+--------------------+
+| Tonny       | Butterworth  | Customer Service   |
+| Marjo       | Giarratana   | Customer Service   |
+| Xiaobin     | Spinelli     | Customer Service   |
+| Yuchang     | Weedman      | Customer Service   |
+| DeForest    | Hagimont     | Development        |
+| Leon        | DasSarma     | Development        |
+| Ebru        | Alpin        | Finance            |
+| Isamu       | Legleitner   | Finance            |
+| Shirish     | Ossenbruggen | Human Resources    |
+| Karsten     | Sigstam      | Human Resources    |
+| Margareta   | Markovitch   | Marketing          |
+| Vishwani    | Minakawa     | Marketing          |
+| Krassimir   | Wegerle      | Production         |
+| Rosine      | Cools        | Production         |
+| Shem        | Kieras       | Production         |
+| Oscar       | Ghazalie     | Production         |
+| Peternela   | Onuegbe      | Quality Management |
+| Rutger      | Hofmeyr      | Quality Management |
+| Sanjoy      | Quadeer      | Quality Management |
+| Dung        | Pesch        | Quality Management |
+| Arie        | Staelin      | Research           |
+| Hilary      | Kambil       | Research           |
+| Przemyslawa | Kaelbling    | Sales              |
+| Hauke       | Zhang        | Sales              |
++-------------+--------------+--------------------+
+I)SELECT AVG(salary) FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN salaries ON dept_emp.emp_no = salaries.emp_no WHERE dept_name = 'Sales';
++-------------+
+| AVG(salary) |
++-------------+
+|  80667.6058 |
++-------------+
+SELECT AVG(salary) FROM departments JOIN dept_emp ON departments.dept_no = dept_emp.dept_no JOIN salaries ON dept_emp.emp_no = salaries.emp_no WHERE dept_name = 'Marketing';
++-------------+
+| AVG(salary) |
++-------------+
+|  71913.2000 |
++-------------+
+
+

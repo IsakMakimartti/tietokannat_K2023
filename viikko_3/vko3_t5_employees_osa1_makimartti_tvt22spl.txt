@@ -1,0 +1,70 @@
+A)SELECT * FROM departments; 
++---------+--------------------+
+| dept_no | dept_name          |
++---------+--------------------+
+| d009    | Customer Service   |
+| d005    | Development        |
+| d002    | Finance            |
+| d003    | Human Resources    |
+| d001    | Marketing          |
+| d004    | Production         |
+| d006    | Quality Management |
+| d008    | Research           |
+| d007    | Sales              |
++---------+--------------------+
+B)SELECT distinct title FROM titles;
++--------------------+
+| title              |
++--------------------+
+| Senior Engineer    |
+| Staff              |
+| Engineer           |
+| Senior Staff       |
+| Assistant Engineer |
+| Technique Leader   |
+| Manager            |
++--------------------+
+C)SELECT MIN(salary) FROM salaries;
++-------------+
+| MIN(salary) |
++-------------+
+|       38623 |
++-------------+
+ SELECT MAX(salary) FROM salaries;
++-------------+
+| MAX(salary) |
++-------------+
+|      158220 |
++-------------+
+D) SELECT AVG(salary) FROM salaries;
++-------------+
+| AVG(salary) |
++-------------+
+|  63810.7448 |
++-------------+
+E)SELECT * from employees WHERE last_name = 'FACELLO';
++--------+------------+-------------+-----------+--------+------------+
+| emp_no | birth_date | first_name  | last_name | gender | hire_date  |
++--------+------------+-------------+-----------+--------+------------+
+|  10001 | 1953-09-02 | Georgi      | Facello   | M      | 1986-06-26 |
+|  10327 | 1954-04-01 | Roded       | Facello   | M      | 1987-09-18 |
+
+jne ...
+F)SELECT COUNT(*) FROM employees WHERE birth_date >= '1950-01-01';
++----------+
+| COUNT(*) |
++----------+
+|   300024 |
++----------+
+G) SELECT COUNT(*) FROM employees WHERE gender = 'M';
++----------+
+| COUNT(*) |
++----------+
+|   179973 |
++----------+
+SELECT COUNT(*) FROM employees WHERE gender = 'F';
++----------+
+| COUNT(*) |
++----------+
+|   120051 |
++----------+
