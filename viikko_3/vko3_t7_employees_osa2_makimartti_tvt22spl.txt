@@ -50,13 +50,33 @@ E) SELECT * FROM employees JOIN salaries ON employees.emp_no = salaries.emp_no O
 +--------+------------+------------+-----------+--------+------------+--------+--------+------------+------------+
 |  43624 | 1953-11-14 | Tokuyasu   | Pesch     | M      | 1985-03-26 |  43624 | 158220 | 2002-03-22 | 9999-01-01 |
 +--------+------------+------------+-----------+--------+------------+--------+--------+------------+------------+
-F)SELECT dept_name,COUNT(*) AS Lukumaara FROM departments JOIN dept_emp ON departments.dept_no=dept_emp.dept_no JOIN employees ON employees.emp_no=dept_emp.emp_no WHERE dept_name = 'Sales';
+F)SELECT DISTINCT first_name, last_name FROM employees JOIN salaries ON employees.emp_no=salaries.emp_no WHERE salary>150000;
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| Tokuyasu   | Pesch     |
+| Ibibia     | Junet     |
+| Xiahua     | Whitcomb  |
+| Lansing    | Kambil    |
+| Willard    | Baca      |
+| Tsutomu    | Alameldin |
+| Charmane   | Griswold  |
+| Weicheng   | Hatcliff  |
+| Mitsuyuki  | Stanfel   |
+| Sanjai     | Luders    |
+| Honesty    | Mukaidono |
+| Weijing    | Chenoweth |
+| Shin       | Birdsall  |
+| Mohammed   | Moehrke   |
+| Lidong     | Meriste   |
++------------+-----------+
+G)SELECT dept_name,COUNT(*) AS Lukumaara FROM departments JOIN dept_emp ON departments.dept_no=dept_emp.dept_no JOIN employees ON employees.emp_no=dept_emp.emp_no WHERE dept_name = 'Sales';
 +-----------+-----------+
 | dept_name | Lukumaara |
 +-----------+-----------+
 | Sales     |     52245 |
 +-----------+-----------+
-G)SELECT dept_name,COUNT(*) AS Lukumaara FROM departments JOIN dept_emp ON departments.dept_no=dept_emp.dept_no JOIN employees ON employees.emp_no=dept_emp.emp_no WHERE dept_name = 'Marketing';
+SELECT dept_name,COUNT(*) AS Lukumaara FROM departments JOIN dept_emp ON departments.dept_no=dept_emp.dept_no JOIN employees ON employees.emp_no=dept_emp.emp_no WHERE dept_name = 'Marketing';
 +-----------+-----------+
 | dept_name | Lukumaara |
 +-----------+-----------+
