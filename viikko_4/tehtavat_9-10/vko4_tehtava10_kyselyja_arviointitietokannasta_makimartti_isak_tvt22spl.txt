@@ -1,0 +1,40 @@
+1)SELECT * FROM opiskelija JOIN arviointi ON opiskelija.idopiskelija = arviointi.idopiskelija WHERE arvosana = 0;
++--------------+---------+----------+--------------+----------------+-------------+----------+------------+--------------+---------------+
+| idopiskelija | Etunimi | Sukunimi | Luokkatunnus | Osoite         | idarviointi | Arvosana | Paivays    | idopiskelija | idopintojakso |
++--------------+---------+----------+--------------+----------------+-------------+----------+------------+--------------+---------------+
+|            1 | Aku     | Ankka    | TT3SNH       | Ankkalinna 313 |           3 |        0 | 2014-09-05 |            1 |             9 |
++--------------+---------+----------+--------------+----------------+-------------+----------+------------+--------------+---------------+
+2)SELECT * FROM opiskelija JOIN arviointi ON opiskelija.idopiskelija = arviointi.idopiskelija JOIN opintojakso ON arviointi.idopintojakso = opintojakso.idopintojakso WHERE arvosana >=1 AND Nimi = 'Fysiikka 3';
++--------------+---------+----------+--------------+----------------+-------------+----------+------------+--------------+---------------+---------------+------------+--------+---------+
+| idopiskelija | Etunimi | Sukunimi | Luokkatunnus | Osoite         | idarviointi | Arvosana | Paivays    | idopiskelija | idopintojakso | idopintojakso | Nimi       | Koodi  | Laajuus |
++--------------+---------+----------+--------------+----------------+-------------+----------+------------+--------------+---------------+---------------+------------+--------+---------+
+|            1 | Aku     | Ankka    | TT3SNH       | Ankkalinna 313 |           2 |        1 | 2014-09-05 |            1 |             5 |             5 | Fysiikka 3 | T20043 |       3 |
+|            2 | Roope   | Ankka    | TT3SNH       | Ankkalinna 314 |           5 |        2 | 2014-09-05 |            2 |             5 |             5 | Fysiikka 3 | T20043 |       3 |
+|            3 | Iines   | Ankka    | TT3SNL       | Ankkalinna 315 |           7 |        3 | 2014-09-05 |            3 |             5 |             5 | Fysiikka 3 | T20043 |       3 |
+|            4 | Mikki   | Hiiri    | TT3SNO       | Ankkalinna 316 |           9 |        4 | 2014-09-05 |            4 |             5 |             5 | Fysiikka 3 | T20043 |       3 |
+|            5 | Hessu   | Hopo     | TT3SNO       | Ankkalinna 317 |          10 |        5 | 2014-09-05 |            5 |             5 |             5 | Fysiikka 3 | T20043 |       3 |
++--------------+---------+----------+--------------+----------------+-------------+----------+------------+--------------+---------------+---------------+------------+--------+---------+
+3)SELECT * from opintojakso JOIN arviointi ON opintojakso.idopintojakso = arviointi.idopintojakso JOIN opiskelija ON arviointi.idopiskelija = opiskelija.idopiskelija WHERE Etunimi = 'Hessu' AND Sukunimi = 'Hopo';
++---------------+-------------+--------+---------+-------------+----------+------------+--------------+---------------+--------------+---------+----------+--------------+----------------+
+| idopintojakso | Nimi        | Koodi  | Laajuus | idarviointi | Arvosana | Paivays    | idopiskelija | idopintojakso | idopiskelija | Etunimi | Sukunimi | Luokkatunnus | Osoite         |
++---------------+-------------+--------+---------+-------------+----------+------------+--------------+---------------+--------------+---------+----------+--------------+----------------+
+|             3 | Tietokannat | T20041 |       3 |          11 |        1 | 2014-09-05 |            5 |             3 |            5 | Hessu   | Hopo     | TT3SNO       | Ankkalinna 317 |
+|             5 | Fysiikka 3  | T20043 |       3 |          10 |        5 | 2014-09-05 |            5 |             5 |            5 | Hessu   | Hopo     | TT3SNO       | Ankkalinna 317 |
++---------------+-------------+--------+---------+-------------+----------+------------+--------------+---------------+--------------+---------+----------+--------------+----------------+
+4)SELECT AVG(arvosana) FROM arviointi JOIN opiskelija ON arviointi.idopiskelija = opiskelija.idopiskelija WHERE Etunimi = 'Aku';
++---------------+
+| AVG(arvosana) |
++---------------+
+|        0.6667 |
++---------------+
+5)SELECT * FROM opintojakso LEFT JOIN arviointi ON opintojakso.idopintojakso = arviointi.idopintojakso WHERE arvosana IS NULL;
++---------------+--------------------------+---------+---------+-------------+----------+---------+--------------+---------------+
+| idopintojakso | Nimi                     | Koodi   | Laajuus | idarviointi | Arvosana | Paivays | idopiskelija | idopintojakso |
++---------------+--------------------------+---------+---------+-------------+----------+---------+--------------+---------------+
+|             1 | Johdatus Ohjelmointiin   | ino2234 |       5 |        NULL |     NULL | NULL    |         NULL |          NULL |
+|             4 | Liike-elaman tapatietous | T20042  |       3 |        NULL |     NULL | NULL    |         NULL |          NULL |
+|             6 | Elektroniikan perusteet  | T20044  |       6 |        NULL |     NULL | NULL    |         NULL |          NULL |
+|             7 | Kellarihumppa            | T20045  |       5 |        NULL |     NULL | NULL    |         NULL |          NULL |
+|             8 | Matematiikka 2           | T20046  |       3 |        NULL |     NULL | NULL    |         NULL |          NULL |
+|            10 | VHDL-kieli               | T20048  |       3 |        NULL |     NULL | NULL    |         NULL |          NULL |
++---------------+--------------------------+---------+---------+-------------+----------+---------+--------------+---------------+

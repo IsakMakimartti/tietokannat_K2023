@@ -1,0 +1,55 @@
+A)INSERT INTO opintojakso (idopintojakso, Nimi, Koodi, Laajuus) values (3,'Tietokannat','T20041',3);
+jne . . .
+ SELECT * FROM opintojakso;
++---------------+--------------------------+---------+---------+
+| idopintojakso | Nimi                     | Koodi   | Laajuus |
++---------------+--------------------------+---------+---------+
+|             1 | Johdatus Ohjelmointiin   | ino2234 |       5 |
+|             3 | Tietokannat              | T20041  |       3 |
+|             4 | Liike-elaman tapatietous | T20042  |       3 |
+|             5 | Fysiikka 3               | T20043  |       3 |
+|             6 | Elektroniikan perusteet  | T20044  |       6 |
+|             7 | Kellarihumppa            | T20045  |       5 |
+|             8 | Matematiikka 2           | T20046  |       3 |
+|             9 | Ruotsin kieli            | T20047  |       3 |
+|            10 | VHDL-kieli               | T20048  |       3 |
++---------------+--------------------------+---------+---------+
+
+B) Aku ankka tehtiin jo tunnilla, joten päivitetään vain tarvittavat. 
+UPDATE opiskelija SET luokkatunnus = 'TT3SNH' WHERE idopiskelija = 1;
+UPDATE opiskelija SET Osoite = 'Ankkalinna 313' WHERE idopiskelija = 1;
+
+Muut: 
+
+INSERT INTO opiskelija (idopiskelija, Etunimi, Sukunimi, Osoite, Luokkatunnus) values (2, 'Roope', 'Ankka', 'Ankkalinna 314', 'TT3SNH');
+jne . . .
+
+select * from opiskelija;
++--------------+---------+----------+--------------+----------------+
+| idopiskelija | Etunimi | Sukunimi | Luokkatunnus | Osoite         |
++--------------+---------+----------+--------------+----------------+
+|            1 | Aku     | Ankka    | TT3SNH       | Ankkalinna 313 |
+|            2 | Roope   | Ankka    | TT3SNH       | Ankkalinna 314 |
+|            3 | Iines   | Ankka    | TT3SNL       | Ankkalinna 315 |
+|            4 | Mikki   | Hiiri    | TT3SNO       | Ankkalinna 316 |
+|            5 | Hessu   | Hopo     | TT3SNO       | Ankkalinna 317 |
++--------------+---------+----------+--------------+----------------+
+
+C)Workbenchissä arvioinnin insert osiossa idopintojakso sekä idopintojaksot taulukon mukaisesti. Sitten vain annetaan arvosana ja päivämäärä.
+Tämän jälkeen forward engineer (täppä kohtaan GENERATE INSERT statements for tables).
+select etunimi,sukunimi,arvosana,paivays,nimi from Arviointi JOIN Opiskelija on Opiskelija.idOpiskelija = Arviointi.idOpiskelija JOIN Opintojakso on Opintojakso.idOpintojakso = Arviointi.idOpintojakso;
++---------+----------+----------+------------+---------------+
+| etunimi | sukunimi | arvosana | paivays    | nimi          |
++---------+----------+----------+------------+---------------+
+| Aku     | Ankka    |        1 | 2014-09-05 | Tietokannat   |
+| Aku     | Ankka    |        1 | 2014-09-05 | Fysiikka 3    |
+| Aku     | Ankka    |        0 | 2014-09-05 | Ruotsin kieli |
+| Roope   | Ankka    |        4 | 2014-09-05 | Tietokannat   |
+| Roope   | Ankka    |        2 | 2014-09-05 | Fysiikka 3    |
+| Iines   | Ankka    |        4 | 2014-09-05 | Tietokannat   |
+| Iines   | Ankka    |        3 | 2014-09-05 | Fysiikka 3    |
+| Mikki   | Hiiri    |        5 | 2014-09-05 | Tietokannat   |
+| Mikki   | Hiiri    |        4 | 2014-09-05 | Fysiikka 3    |
+| Hessu   | Hopo     |        5 | 2014-09-05 | Fysiikka 3    |
+| Hessu   | Hopo     |        1 | 2014-09-05 | Tietokannat   |
++---------+----------+----------+------------+---------------+
