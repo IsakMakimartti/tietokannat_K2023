@@ -1,0 +1,85 @@
+Alla olevat tehty workbenchissä forward engineerillä. Tekstit kopioitu siitä.
+
+Huom. Kirja taulussa olevat "lainassa" ja "saatavilla" ja "kokonaismäärä" kentät ei varsinaisesti missään käytössä, joten niissä on vain satunnaisia numeroita.
+
+//Asiakas
+INSERT INTO `test_db1`.`asiakas` (`idAsiakas`, `Etunimi`, `Sukunimi`, `Email`, `Puhelinnumero`, `Osoite`) VALUES (DEFAULT, 'Minni', 'Hiiri', 'minni.hiiri@ankkalinna.duck', '+358237658097', 'Hiiritie 15');
+
+//Lainaus (Laitetaan oikea idAsiakas, sekä idKirja)
+INSERT INTO `test_db1`.`lainaus` (`idLainaus`, `Lainaus pvm`, `Palautus pvm`, `Palautettu`, `Asiakas_idAsiakas`, `Kirja_idKirja`) VALUES (DEFAULT, '2023-01-25', '2023-02-25', 0, 2, 4);
+
+//Kirjat (2kpl samaa teosta), HUOM. laitetaan molemmile sama idTeos.
+INSERT INTO `test_db1`.`kirja` (`idKirja`, `Hylly`, `Osasto`, `Kokonaismaara`, `Lainassa`, `Saatavilla`, `Teos_idTeos`) VALUES (DEFAULT, '1A', 'Sarjakuvat', 1, 0, 1, 2);
+INSERT INTO `test_db1`.`kirja` (`idKirja`, `Hylly`, `Osasto`, `Kokonaismaara`, `Lainassa`, `Saatavilla`, `Teos_idTeos`) VALUES (DEFAULT, '1B', 'Sarjakuvat', 1, 0, 1, 2);
+
+//Teos
+INSERT INTO `test_db1`.`teos` (`idTeos`, `Nimi`, `Julkaisuvuosi`) VALUES (DEFAULT, 'Akun ja Roopen Seikkaulut', 2005);
+
+//Tekijät
+INSERT INTO `test_db1`.`tekija` (`idTekija`, `Etunimi`, `Sukunimi`) VALUES (DEFAULT, 'Roope', 'Ankka');
+INSERT INTO `test_db1`.`tekija` (`idTekija`, `Etunimi`, `Sukunimi`) VALUES (DEFAULT, 'Aku', 'Ankka');
+
+//Teos_has_teos (Annetaan teokselle 'Akun ja Roopen Seikkaulut' tekijät Aku Ankka ja Roope Ankka. Valitaan sama idteos mutta asetetaan omat idtekijat.
+INSERT INTO `test_db1`.`teos_has_tekija` (`Teos_idTeos`, `Tekija_idTekija`) VALUES (2, 2);
+INSERT INTO `test_db1`.`teos_has_tekija` (`Teos_idTeos`, `Tekija_idTekija`) VALUES (2, 3);
+
+Testejä:
+
+select * from asiakas;
++-----------+---------+----------+-----------------------------+---------------+-------------+
+| idAsiakas | Etunimi | Sukunimi | Email                       | Puhelinnumero | Osoite      |
++-----------+---------+----------+-----------------------------+---------------+-------------+
+|         2 | Minni   | Hiiri    | minni.hiiri@ankkalinna.duck | +358237658097 | Hiiritie 15 |
++-----------+---------+----------+-----------------------------+---------------+-------------+
+
+select * from lainaus;
++-----------+-------------+--------------+------------+-------------------+---------------+
+| idLainaus | Lainaus pvm | Palautus pvm | Palautettu | Asiakas_idAsiakas | Kirja_idKirja |
++-----------+-------------+--------------+------------+-------------------+---------------+
+|         1 | 2023-01-25  | 2023-02-25   |          0 |                 2 |             4 |
++-----------+-------------+--------------+------------+-------------------+---------------+
+
+select * from kirja;
++---------+-------+------------+---------------+----------+------------+-------------+
+| idKirja | Hylly | Osasto     | Kokonaismaara | Lainassa | Saatavilla | Teos_idTeos |
++---------+-------+------------+---------------+----------+------------+-------------+
+|       4 | 1A    | Sarjakuvat |             1 |        0 |          1 |           2 |
+|       5 | 1B    | Sarjakuvat |             1 |        0 |          1 |           2 |
++---------+-------+------------+---------------+----------+------------+-------------+
+
+select * from teos;
++--------+---------------------------+---------------+
+| idTeos | Nimi                      | Julkaisuvuosi |
++--------+---------------------------+---------------+
+|      2 | Akun ja Roopen Seikkaulut |          2005 |
++--------+---------------------------+---------------+
+
+ select * from teos_has_tekija;
++-------------+-----------------+
+| Teos_idTeos | Tekija_idTekija |
++-------------+-----------------+
+|           2 |               2 |
+|           2 |               3 |
++-------------+-----------------+
+
+select * from tekija;
++----------+---------+----------+
+| idTekija | Etunimi | Sukunimi |
++----------+---------+----------+
+|        2 | Roope   | Ankka    |
+|        3 | Aku     | Ankka    |
++----------+---------+----------+
+
+SELECT Nimi from teos join teos_has_tekija on teos.idTeos = teos_has_tekija.Teos_idTeos JOIN tekija ON tekija.idTekija = teos_has_tekija.Tekija_idTekija WHERE Etunimi = 'Aku';
++---------------------------+
+| Nimi                      |
++---------------------------+
+| Akun ja Roopen Seikkaulut |
++---------------------------+
+SELECT Nimi from teos join teos_has_tekija on teos.idTeos = teos_has_tekija.Teos_idTeos JOIN tekija ON tekija.idTekija = teos_has_tekija.Tekija_idTekija WHERE Etunimi = 'Roope';
++---------------------------+
+| Nimi                      |
++---------------------------+
+| Akun ja Roopen Seikkaulut |
++---------------------------+
+

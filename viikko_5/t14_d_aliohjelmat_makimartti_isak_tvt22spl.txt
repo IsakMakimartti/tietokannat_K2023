@@ -1,0 +1,46 @@
+//Aliohjelma
+CREATE PROCEDURE `Opintosuoritus` (a varchar(45), b varchar(45), c varchar(45), d int)
+BEGIN
+	IF d<=5 THEN
+    UPDATE Arviointi
+    JOIN Opiskelija ON Opiskelija.idOpiskelija=Arviointi.idOpiskelija
+	JOIN Opintojakso ON Opintojakso.idOpintojakso =
+	Arviointi.idOpintojakso
+    SET Arvosana = d 
+    WHERE Etunimi = a AND Sukunimi = b AND Koodi = c;
+    END IF;
+END
+
+//Testi
+
+mysql> select arvosana from arviointi join opintojakso on opintojakso.idopintojakso = arviointi.idopintojakso join opiskelija on opiskelija.idopiskelija = arviointi.idopiskelija where etunimi = 'Petri' AND Sukunimi = 'Peltonen' AND Koodi = 'TAR2023';
++----------+
+| arvosana |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> CALL Opintosuoritus('Petri', 'Peltonen', 'TAR2023', 5);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select arvosana from arviointi join opintojakso on opintojakso.idopintojakso = arviointi.idopintojakso join opiskelija on opiskelija.idopiskelija = arviointi.idopiskelija where etunimi = 'Petri' AND Sukunimi = 'Peltonen' AND Koodi = 'TAR2023';
++----------+
+| arvosana |
++----------+
+|        5 |
++----------+
+1 row in set (0.00 sec)
+
+Ja vielä testi isommalla kun 5:
+
+mysql> CALL Opintosuoritus('Petri', 'Peltonen', 'TAR2023', 6);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select arvosana from arviointi join opintojakso on opintojakso.idopintojakso = arviointi.idopintojakso join opiskelija on opiskelija.idopiskelija = arviointi.idopiskelija where etunimi = 'Petri' AND Sukunimi = 'Peltonen' AND Koodi = 'TAR2023';
++----------+
+| arvosana |
++----------+
+|        5 |
++----------+
+1 row in set (0.00 sec)
